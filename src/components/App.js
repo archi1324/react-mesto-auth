@@ -40,7 +40,6 @@ export default function App() {
   const [toolTipPopupOpen, settoolTipPopupOpen] = React.useState(false);
 
 
-
   const handleEditProfileClick = () => { setProfilePopupOpen(true) }
   const handleAddPlaceClick = () => { setPlacePopupOpen(true) }
   const handleEditAvatarClick = () => { setAvatarPopupOpen(true) }
@@ -90,7 +89,7 @@ export default function App() {
   function handleCardDelete(card) {
     api.deleteCard(card._id)
       .then(() => {
-        setCards((cards) => cards.filter(c => c._id == !card._id))
+        setCards((state) => state.filter(c => c._id !== card._id))
       })
       .catch((err) => { console.log(err) })
   }
@@ -129,7 +128,7 @@ export default function App() {
         .then((data) => {
           if (data) {
             setLoggedIn(true);
-            setProfileEmail(data.email);
+            setProfileEmail(data.data.email);
             navigate('/');
           }
         })
@@ -179,6 +178,8 @@ export default function App() {
     setLoggedIn(false);
     navigate('/sign-in');
   }
+
+  console.log(profileEmail);
 
   return (
     <CurrentUserContexts.Provider value={currentUser}>
