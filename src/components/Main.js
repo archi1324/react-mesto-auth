@@ -10,7 +10,7 @@ export default function Main(props) {
       <section className="profile">
         <div className="profile__info">
           <div className="profile__avatar">
-            <img src={currentUser.avatar} alt="Фото профиля" className="profile__avatar-icon" onClick={props.editAvatar} />
+            <img src={currentUser.avatar} alt="Фото профиля" className="profile__avatar" onClick={props.editAvatar} />
             <button className="profile__avatar-button"></button>
           </div>
           <h1 className="profile__name">{currentUser.name}</h1>
@@ -20,7 +20,7 @@ export default function Main(props) {
         <button onClick={props.addPlace} className="profile__add-button" type="button"></button>
       </section>
       <section className="elements">
-        {props.card.map((card) => (
+        {props.cards.map((card) => (
           <Card key={card._id} {...card} cardClick={props.cardClick} CardLike={props.CardLike} CardDelete={props.CardDelete}/>
         ))}
       </section>

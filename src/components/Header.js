@@ -3,6 +3,7 @@ import React from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
 
 export default function Header(props) {
+  console.log(props);
   return (
     <section className="header">
       <img src={srcLogo} alt="Логотип Место Россия" className="header__logo" />

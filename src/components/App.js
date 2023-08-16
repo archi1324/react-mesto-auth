@@ -32,7 +32,7 @@ export default function App() {
   const [avatarPopupOpen, setAvatarPopupOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState(null);
   const [currentUser, setCurrentUser] = React.useState({});
-  const [card, setCard] = React.useState([]);
+  const [cards, setCards] = React.useState([]);
   const navigate = useNavigate();
   const [loggedIn, setLoggedIn] = React.useState(false)
   const [profileEmail, setProfileEmail] = React.useState('');
@@ -64,7 +64,7 @@ export default function App() {
 
   React.useEffect(() => {
     api.getInitialCards()
-      .then((data) => { setCard(data) })
+      .then((data) => { setCards(data) })
       .catch((err) => { console.log(err) })
   }, []);
 
@@ -74,13 +74,13 @@ export default function App() {
     if (!isLiked) {
       api.likeCard(card._id, !isLiked)
         .then((newCard) => {
-          setCard((state) => state.map((c) => (c._id === card._id ? newCard : c)));
+          setCards((state) => state.map((c) => (c._id === card._id ? newCard : c)));
         })
         .catch((err) => { console.log(err) });
     } else {
       api.deleteCardLike(card._id, !isLiked)
         .then((newCard) => {
-          setCard((state) =>
+          setCards((state) =>
             state.map((c) => (c._id === card._id ? newCard : c)));
         })
         .catch((err) => { console.log(err) });
@@ -90,7 +90,7 @@ export default function App() {
   function handleCardDelete(card) {
     api.deleteCard(card._id)
       .then(() => {
-        setCard(card.filter(c => c._id !== card._id))
+        setCards((cards) => cards.filter(c => c._id == !card._id))
       })
       .catch((err) => { console.log(err) })
   }
@@ -116,7 +116,7 @@ export default function App() {
   function handleAddPlaceSubmit(data) {
     api.addNewCard(data)
       .then((newCard) => {
-        setCard([newCard, ...card]);
+        setCards([newCard, ...cards]);
         closeAllPopups()
       })
       .catch(err => { console.error(err) })
@@ -193,7 +193,7 @@ export default function App() {
             cardClick={handleCardClick}
             CardLike={handleCardLike}
             CardDelete={handleCardDelete}
-            card={card} />}/>
+            cards={cards} />}/>
             <Route path="/" element={loggedIn ? <Navigate to="/" /> : <Navigate to="/sign-up" />} /> 
             <Route path="/sign-up" element={<Register onRegister={handleRegisterNewUser} />} />
             <Route path="/sign-in" element={<Login onLogin={handleLoginUser} />} />
