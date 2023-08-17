@@ -179,8 +179,6 @@ export default function App() {
     navigate('/sign-in');
   }
 
-  console.log(profileEmail);
-
   return (
     <CurrentUserContexts.Provider value={currentUser}>
       <div className="page">

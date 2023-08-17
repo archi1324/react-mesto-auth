@@ -6,7 +6,7 @@ export default function Card(card) {
   // проверяем владельца
   const isOwn = card.owner._id === currentUser._id;
   // Создаём переменную, которую после зададим в `className` для кнопки удаления
-  const cardDeleteButtonClassName = (` ${isOwn ? 'card__trash' : 'card__trash_disabled'}`);
+  // const cardDeleteButtonClassName = (`${isOwn ? 'card__trash' : 'card__trash_disabled'}`);
   // есть ли лайк у текущего пользователя, переменная после зададим в класснейм для кнопки лайка
   const isLiked = card.likes.some(i => i._id === currentUser._id);
   const cardLikeButtonClassName = `card__like ${isLiked && "card__like_on"}`;
@@ -33,7 +33,7 @@ export default function Card(card) {
           <p className="card__like-counter">{card.likes.length}</p>
         </div>
       </div>
-      <button type="button" className={cardDeleteButtonClassName} onClick={handleDeleteClick} />
+      {isOwn && <button type="button" className='card__trash' onClick={handleDeleteClick} />}
     </div>
   );
 }
